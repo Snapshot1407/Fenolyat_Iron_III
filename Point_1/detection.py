@@ -10,7 +10,7 @@ def mass(atoms):
     for i in atoms:
         x_mass += (mass[i[0]] * float(i[1]))
         y_mass += (mass[i[0]] * float(i[2]))
-        z_mass += (mass[i[0]] * float(i[2]))
+        z_mass += (mass[i[0]] * float(i[3]))
         mass_mol = mass_mol + mass[i[0]]
     return x_mass / mass_mol, y_mass / mass_mol, z_mass/mass_mol
 
@@ -70,4 +70,4 @@ def angle(atom1, atom2, atom3):
     bx = (atom1[1] - atom3[1])
     by = (atom1[2] - atom3[2])
     bz = (atom1[3] - atom3[3])
-    return  arccos( (ax*bx + ay*by + az*bz) / (distance(atom1,atom2) * distance(atom1,atom3)) )
+    return arccos( (ax*bx + ay*by + az*bz) / (distance(atom1,atom2) * distance(atom1,atom3)) )

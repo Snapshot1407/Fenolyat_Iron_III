@@ -27,7 +27,7 @@ def energy_angle(atoms, bonds):
         angle_ravn = en_b.get(intersection)[1]
         angle_angle = angle(nom_at_1,nom_at_2,nom_at_3) #нахождение угла в радианах
         en_simple += 0.5 * K_ug * (angle_angle - angle_ravn) ** 2
-    return en_simple
+    return round(en_simple, 5)
 
 #функция вычисления энергии по связям для молекулы
 def energy_dist(atoms, bonds):
@@ -42,4 +42,4 @@ def energy_dist(atoms, bonds):
         r_ravn = en_b.get(full_name)[1]
         rr = distance(atoms[nom_at_1], atoms[nom_at_2])
         en_simple += 0.5 * K_sv * (rr - r_ravn) ** 2
-    return en_simple
+    return round(en_simple, 5)

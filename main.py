@@ -1,4 +1,4 @@
-from Point_1.detection import *
+from Point_1.animation import *
 from Energy.covalent_energy import *
 
 
@@ -28,7 +28,10 @@ f.close()
 print("Центр массы молекулы:", *mass(atoms))
 bonds, len_bonds = bond_n1(number, atoms)
 #Вывести текущую энергию молекулы (учитываются только связи)
-print("Энергия молекулы:", energy_dist(atoms, bonds))
+print("Энергия молекулы (учитываются только связи):", energy_dist(atoms, bonds))
 bond_angles, len_bonds_angles = bond_n2(number,bonds)
-print("Энергия молекулы:",energy_angle(atoms,bond_angles))
-
+print("Энергия молекулы(учитываются только углы):",energy_angle(atoms,bond_angles))
+optimus( number, atoms, 300, bonds, bond_angles)
+print("Энергия молекулы (учитываются только связи):", energy_dist(atoms, bonds))
+bond_angles, len_bonds_angles = bond_n2(number,bonds)
+print("Энергия молекулы(учитываются только углы):",energy_angle(atoms,bond_angles))
