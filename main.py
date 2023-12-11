@@ -1,6 +1,6 @@
 from Point_1.animation import *
 from Energy.covalent_energy import *
-
+from Energy.noncovalent_energy import *
 
 #Сделать так, чтобы координаты атомов преобразовались из строкового типа в числа (название атома atom[0] мы игнорируем, так как это не число)
 def unpacking(atom):
@@ -26,12 +26,24 @@ f.close()
 
 
 print("Центр массы молекулы:", *mass(atoms))
-bonds, len_bonds = bond_n1(number, atoms)
+
+bonds = bond_n1(number, atoms)
+bond_angles = bond_n2(number,bonds)
+
 #Вывести текущую энергию молекулы (учитываются только связи)
 print("Энергия молекулы (учитываются только связи):", energy_dist(atoms, bonds))
-bond_angles, len_bonds_angles = bond_n2(number,bonds)
+bond, len_b = bond_n3(bonds,bond_angles)
+
+#Вывести текущую энергию молекулы (учитываются только углы)
 print("Энергия молекулы(учитываются только углы):",energy_angle(atoms,bond_angles))
-optimus( number, atoms, 300, bonds, bond_angles)
+bond_vdv, len_vdv = filter_circle(atoms,bond,len_b)
+
+#Вывести текущую энергию молекулы (учитываются только взаимодействие Ван-дер-Вальса)
+print("Энергия молекулы(учитываются только взаимодействие Ван-дер-Вальса):",energy_VdV(atoms,bond_vdv))
+
+#оптимизация молекулы
+optimus(number, atoms, 50000, bonds, bond_angles,bond_vdv)
 print("Энергия молекулы (учитываются только связи):", energy_dist(atoms, bonds))
-bond_angles, len_bonds_angles = bond_n2(number,bonds)
 print("Энергия молекулы(учитываются только углы):",energy_angle(atoms,bond_angles))
+print("Энергия молекулы(учитываются только взаимодействие Ван-дер-Вальса):",energy_VdV(atoms,bond_vdv))
+

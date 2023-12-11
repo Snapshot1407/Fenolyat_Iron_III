@@ -12,7 +12,7 @@ def mass(atoms):
         y_mass += (mass[i[0]] * float(i[2]))
         z_mass += (mass[i[0]] * float(i[3]))
         mass_mol = mass_mol + mass[i[0]]
-    return x_mass / mass_mol, y_mass / mass_mol, z_mass/mass_mol
+    return round(x_mass / mass_mol, 5), round(y_mass / mass_mol, 5), round(z_mass/mass_mol, 5)
 
 
 #Функция вычислениия дистанции между атомами
@@ -39,7 +39,7 @@ def bond_n1(number, atoms):
                 r = 1.935
             if distance(atom1,atom2) < r:
                 bonds.append([n1, n2])
-    return bonds, len(bonds)
+    return bonds
 
 #Найти все связи в молекуле для образования угла по трем точкам, запомнить их, чтобы потом можно было обращаться к атомам в связи.
 #первый атом является центральным, точкой пересечения векторов в пространстве
@@ -61,7 +61,7 @@ def bond_n2(number, bonds):
                 len_bond = 0
                 c = sorted(list(set(neighbour)))
                 bond_angles.append(c)
-    return bond_angles, len(bond_angles)
+    return bond_angles
 
 #Функция вычислениия дистанции между атомами
 #первый атом является центральным, точкой пересечения векторов в пространстве
@@ -71,3 +71,38 @@ def angle(atom1, atom2, atom3):
     by = (atom1[2] - atom3[2])
     bz = (atom1[3] - atom3[3])
     return arccos( (ax*bx + ay*by + az*bz) / (distance(atom1,atom2) * distance(atom1,atom3)) )
+
+def bond_n3(bonds_double, bonds_triple):
+    bonds = list()
+    for i in bonds_triple:
+        for bond in bonds_double:
+            neighbour = []
+            if i[0] not in bond:
+                if i[1] == bond[0] :
+                    neighbour.append(i[2])
+                    neighbour.append(bond[1])
+                elif i[1] == bond[1]:
+                    neighbour.append(i[2])
+                    neighbour.append(bond[0])
+                elif i[2] == bond[0]:
+                    neighbour.append(i[1])
+                    neighbour.append(bond[1])
+                elif i[2] == bond[1]:
+                    neighbour.append(i[1])
+                    neighbour.append(bond[0])
+            if neighbour and neighbour[0] != neighbour[1] and neighbour not in bonds_double:
+                bonds.append(neighbour)
+    return bonds, len(bonds)
+def filter_circle(atoms, bonds, numbers):
+    i = 0
+    while True:
+        atom1 = atoms[bonds[i][0]]
+        atom2 = atoms[bonds[i][1]]
+        if atom1[0] == atom2[0] == 'C':
+            bonds.pop(i)
+            i -= 1
+            numbers -= 1
+        i += 1
+        if i >= numbers:
+            break
+    return bonds, len(bonds)
