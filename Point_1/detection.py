@@ -70,7 +70,7 @@ def angle(atom1, atom2, atom3):
     bx = (atom1[1] - atom3[1])
     by = (atom1[2] - atom3[2])
     bz = (atom1[3] - atom3[3])
-    return arccos( (ax*bx + ay*by + az*bz) / (distance(atom1,atom2) * distance(atom1,atom3)) )
+    return round(arccos( (ax*bx + ay*by + az*bz) / (distance(atom1,atom2) * distance(atom1,atom3)) ),5)
 
 def bond_n3(bonds_double, bonds_triple):
     bonds = list()

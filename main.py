@@ -26,7 +26,7 @@ f.close()
 
 
 print("Центр массы молекулы:", *mass(atoms))
-
+#
 bonds = bond_n1(number, atoms)
 bond_angles = bond_n2(number,bonds)
 
@@ -42,7 +42,7 @@ bond_vdv, len_vdv = filter_circle(atoms,bond,len_b)
 print("Энергия молекулы(учитываются только взаимодействие Ван-дер-Вальса):",energy_VdV(atoms,bond_vdv))
 
 #оптимизация молекулы
-optimus(number, atoms, 50000, bonds, bond_angles,bond_vdv)
+optimus(number, atoms, 100, bonds, bond_angles,bond_vdv)
 print("Энергия молекулы (учитываются только связи):", energy_dist(atoms, bonds))
 print("Энергия молекулы(учитываются только углы):",energy_angle(atoms,bond_angles))
 print("Энергия молекулы(учитываются только взаимодействие Ван-дер-Вальса):",energy_VdV(atoms,bond_vdv))

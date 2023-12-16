@@ -3,7 +3,7 @@ from Point_1.detection import *
 ε = 0.25
 σ = 3.345
 
-#функция вычисления энергии по связям для молекулы
+#функция вычисления энергии Ван-дер-Вальса для молекулы
 def energy_VdV(atoms, bonds):
     en_simple = 0
     for bond in bonds:

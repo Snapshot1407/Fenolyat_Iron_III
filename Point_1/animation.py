@@ -1,7 +1,7 @@
-from random import random, randint, seed
+from numpy.random import random, randint
 from Energy.covalent_energy import *
 from Energy.noncovalent_energy import *
-
+from math import sin, cos
 
 #Создание простейшей анимации
 def anim(number,atoms):
@@ -15,7 +15,12 @@ def anim(number,atoms):
         print(number, file = f2)
         print(i, file = f2)
         for atom in atoms:
-            print(atom[0], atom[1] + diff, atom[2], atom[3], file = f2)
+
+            atom[1] += sin(30)
+            atom[2] += sin(-45)
+            atom[3] += sin(30)
+
+            print(atom[0], atom[1], atom[2], atom[3], file = f2)
 
     f2.close()
 def optimus(number, atoms, frames, bonds, bond_angles,bond_vdv):
@@ -27,25 +32,38 @@ def optimus(number, atoms, frames, bonds, bond_angles,bond_vdv):
     E_dist = energy_dist(atoms,bonds)
     E_angle = energy_angle(atoms,bond_angles)
     E_VdV = energy_VdV(atoms,bond_vdv)
-    for i in range(frames):
+    while n < (frames):
         atom_id = randint(0, number - 1)
-        coord_id = randint(1, 3)
-        diff = round(random(),5)
-        plus_or_minus = randint(0,1)
-        atoms[atom_id][coord_id] += diff if plus_or_minus == 0 else -diff
+
+        plus_or_minus_x = randint(0,1)
+        diff_x = random()
+        atoms[atom_id][1] += diff_x if plus_or_minus_x == 0 else -diff_x
+
+        plus_or_minus_y = randint(0,1)
+        diff_y = random()
+        atoms[atom_id][2] += diff_y if plus_or_minus_y == 0 else -diff_y
+
+        plus_or_minus_z = randint(0,1)
+        diff_z = random()
+        atoms[atom_id][3] += diff_z if plus_or_minus_z == 0 else -diff_z
+
+
+
         E_dist1 = energy_dist(atoms,bonds)
         E_angle1 = energy_angle(atoms, bond_angles)
         E_VdV1 = energy_VdV(atoms,bond_vdv)
 
         if E_dist + E_angle + E_VdV > E_dist1 + E_angle1 + E_VdV1:
             n += 1
-            E_dist = min(E_dist1,E_dist)
-            E_angle = min(E_angle1,E_angle)
-            E_VdV = min(E_VdV1,E_VdV)
+            E_dist = E_dist1
+            E_angle = E_angle1
+            E_VdV = E_VdV1
             print(round(E_dist + E_angle + E_VdV,5),n,sep='\t',file=f3)
             key = True
         else:
-            atoms[atom_id][coord_id] += diff if plus_or_minus == 1 else -diff
+            atoms[atom_id][1] += diff_x if plus_or_minus_x == 1 else -diff_x
+            atoms[atom_id][2] += diff_y if plus_or_minus_y == 1 else -diff_y
+            atoms[atom_id][3] += diff_z if plus_or_minus_z == 1 else -diff_z
         if key:
             print(number, file=f2)
             print(n, file=f2)
